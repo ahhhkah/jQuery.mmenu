@@ -302,11 +302,15 @@
 		this.trigger( 'opening' );
 	};
 
-	$[ _PLUGIN_ ].prototype.close = function()
+	$[ _PLUGIN_ ].prototype.close = function(callback)
 	{
 
 		if ( !this.vars.opened )
 		{
+            if(typeof callback === "function"){
+                callback();
+            }
+
 			return;
 		}
 
@@ -344,6 +348,10 @@
 
 				that.vars.opened = false;
 				that.trigger( 'closed' );
+
+				if(typeof callback === "function"){
+					callback();
+				}
 
 			}, this.conf.transitionDuration
 		);

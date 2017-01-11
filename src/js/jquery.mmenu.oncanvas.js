@@ -94,7 +94,8 @@
 		clone				: false,
 		openingInterval		: 25,
 		panelNodetype		: 'ul, ol, div',
-		transitionDuration	: 400
+		transitionDuration	: 400,
+		firstLevelOnly		: false
 	};
 
 	$[ _PLUGIN_ ].prototype = {
@@ -740,7 +741,13 @@ evnt = (evnt == 'init') ? 'initPanels' : evnt;
 
 		__findAddBack: function( $e, s )
 		{
-			return $e.find( s ).add( $e.filter( s ) );
+			if( this.conf.firstLevelOnly ){
+                return $e.children( s ).add( $e.filter( s ) );
+			}
+			else
+			{
+				return $e.find( s ).add( $e.filter( s ) );
+			}
 		},
 
 		__filterListItems: function( $i )
